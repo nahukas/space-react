@@ -8,9 +8,14 @@ interface Props extends RouteComponentProps {
   component: React.ComponentType<any>;
 }
 
-const PublicRoute: React.FC<Props> = ({ component: Component, path }) => {
+const PublicRoute: React.FC<Props> = ({
+  component: Component,
+  path,
+  exact,
+}) => {
   return (
     <Route
+      exact={exact}
       path={path}
       render={(route) => {
         return (
