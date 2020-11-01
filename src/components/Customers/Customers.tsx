@@ -91,6 +91,7 @@ const Customers: React.FC = () => {
         rowClassName={(record, index) =>
           index % 2 === 0 ? 'table-row-light' : 'table-row-dark'
         }
+        style={{ boxShadow: '6px 5px 20px 0px #9492924f' }}
       />
     </>
   );
