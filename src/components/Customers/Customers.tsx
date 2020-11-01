@@ -88,6 +88,9 @@ const Customers: React.FC = () => {
             handleRowClick(record.id);
           },
         })}
+        rowClassName={(record, index) =>
+          index % 2 === 0 ? 'table-row-light' : 'table-row-dark'
+        }
       />
     </>
   );

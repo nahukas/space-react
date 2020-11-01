@@ -1,0 +1,77 @@
+html {
+  font-size: 10px;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 10px;
+}
+
+h1 {
+  font-size: 2rem;
+}
+
+p {
+  font-size: 1.4rem;
+}
+
+span {
+  font-size: 1.4rem;
+}
+
+a {
+  font-size: 1.4rem;
+}
+
+input {
+  /* Chrome, Safari, Edge, Opera */
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Firefox */
+  input[type='number'] {
+    -moz-appearance: textfield;
+  }
+}
+
+.container {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 10px;
+
+  @include respond-above(xs) {
+    padding: 0 20px;
+  }
+  @include respond-above(sm) {
+    padding: 0 30px;
+  }
+  @include respond-above(md) {
+    padding: 0 40px;
+  }
+
+  @media (min-width: 1280px) {
+    width: 1200px;
+  }
+
+  @media (min-width: 1600px) {
+    width: 1440px;
+  }
+}
+
+.content {
+  padding: 10px 0;
+
+  @include respond-above(xs) {
+    padding: 20px 0;
+  }
+  @include respond-above(sm) {
+    padding: 30px 0;
+  }
+}
+
+.text-center {
+  text-align: center;
+}

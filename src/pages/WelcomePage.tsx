@@ -4,8 +4,11 @@ import Customers from '../components/Customers/Customers';
 const WelcomePage: React.FC = () => {
   return (
     <>
-      <h1>Welcome Page</h1>
-      <Customers />
+      <div className="container">
+        <section style={{ marginTop: '10vh' }}>
+          <Customers />
+        </section>
+      </div>
     </>
   );
 };

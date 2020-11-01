@@ -17,6 +17,17 @@ interface Props extends FormComponentProps<FormValues> {
   handleModalVisible: (modalVisible: boolean, shouldUpdate: boolean) => void;
 }
 
+const formItemLayout = {
+  labelCol: {
+    xs: { span: 24 },
+    sm: { span: 8 },
+  },
+  wrapperCol: {
+    xs: { span: 24 },
+    sm: { span: 16 },
+  },
+};
+
 const ModalCustomer: React.FC<Props> = ({
   form,
   id,
@@ -34,6 +45,7 @@ const ModalCustomer: React.FC<Props> = ({
         setIsLoading(true);
         try {
           const response = await CustomersService.getOne(id);
+          console.log(response);
           setCustomer(response);
         } catch (error) {
           message.error(error.message);
@@ -68,7 +80,7 @@ const ModalCustomer: React.FC<Props> = ({
         handleModalVisible(false, true);
       } catch (error) {
         message.error('Error');
-        handleModalVisible(false, true);
+        handleModalVisible(false, false);
       } finally {
         setIsSubmitting(false);
       }
@@ -85,8 +97,14 @@ const ModalCustomer: React.FC<Props> = ({
       {isLoading && <Spin />}
       {customer !== undefined && (
         <>
-          <Form onSubmit={handleSubmit} colon={false} layout="vertical">
-            <Form.Item label="Budget">
+          <Form
+            onSubmit={handleSubmit}
+            // layout="vertical"
+            colon={false}
+            hideRequiredMark={true}
+            {...formItemLayout}
+          >
+            <Form.Item label="Budget" labelAlign="left">
               {getFieldDecorator('budget', {
                 initialValue: germanFormat(customer?.budget).replace('.', ''),
                 rules: [
@@ -103,18 +121,20 @@ const ModalCustomer: React.FC<Props> = ({
               })(<Input />)}
             </Form.Item>
 
-            <Form.Item label="Budget Spent">
+            <Form.Item label="Budget Spent" labelAlign="left">
               <span>{germanFormat(customer.budget_spent)}</span>
             </Form.Item>
 
-            <Button
-              type="primary"
-              loading={isSubmitting}
-              disabled={isSubmitting}
-              htmlType="submit"
-            >
-              Modify
-            </Button>
+            <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+              <Button
+                type="primary"
+                loading={isSubmitting}
+                disabled={isSubmitting}
+                htmlType="submit"
+              >
+                Modify
+              </Button>
+            </div>
           </Form>
         </>
       )}

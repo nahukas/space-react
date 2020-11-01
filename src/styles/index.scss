@@ -1,6 +1,13 @@
 @import 'reset';
-// @import '~antd/dist/antd.compact.css';
 
-h1 {
-  color: red;
-}
+// Settings
+@import '01.settings/colors';
+
+// tools
+@import '02.tools/media-queries';
+
+// generics
+@import '03.generic/layout';
+
+// antd overrides
+@import '05.utilities/overrides';
