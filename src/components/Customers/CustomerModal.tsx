@@ -8,7 +8,7 @@ import { validateAntForm } from '../../helpers/ant-form';
 import { RegEx } from '../../config/constants';
 
 interface FormValues {
-  budget: number;
+  budget: string;
 }
 
 interface Props extends FormComponentProps<FormValues> {
@@ -56,7 +56,7 @@ const ModalCustomer: React.FC<Props> = ({
         const entity: Customer = {
           id: customer.id,
           name: customer.name,
-          budget,
+          budget: Number(budget.replace(',', '.')),
           budget_spent: customer.budget_spent,
           date_of_first_purchase: customer.date_of_first_purchase,
         };
@@ -96,14 +96,15 @@ const ModalCustomer: React.FC<Props> = ({
                   },
                   {
                     pattern: RegEx.GERMAN_NUMBER_FORMAT,
-                    message: 'Please enter only numbers and comma for decimals',
+                    message:
+                      'Please enter only numbers and use a comma for decimals',
                   },
                 ],
               })(<Input />)}
             </Form.Item>
 
             <Form.Item label="Budget Spent">
-              <span>{germanFormat(customer.budget)}</span>
+              <span>{germanFormat(customer.budget_spent)}</span>
             </Form.Item>
 
             <Button
