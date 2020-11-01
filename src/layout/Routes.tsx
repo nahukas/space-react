@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Switch } from 'react-router-dom';
 import PublicRoute from '../components/PublicRoute/PublicRoute';
 import { URLs } from '../config/enums';
 import NotFoundPage from '../pages/NotFoundPage';
@@ -10,7 +10,7 @@ const Routes: React.FC = () => {
     <BrowserRouter>
       <Switch>
         <PublicRoute exact path={URLs.ROOT} component={WelcomePage} />
-        <Route component={NotFoundPage} />
+        <PublicRoute component={NotFoundPage} />
       </Switch>
     </BrowserRouter>
   );

@@ -23,6 +23,10 @@
   color: $secondary-color;
 }
 
+.ant-layout-content {
+  height: calc(100vh - 70px);
+}
+
 .table-row-light {
   background: #fff;
 }

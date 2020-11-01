@@ -5,7 +5,9 @@ import Footer from './Footer';
 
 const PublicLayout: React.FC = ({ children }) => (
   <AntLayout style={{ minHeight: '100vh' }}>
-    <Content>{children}</Content>
+    <Content>
+      <div className="container">{children}</div>
+    </Content>
     <Footer />
   </AntLayout>
 );

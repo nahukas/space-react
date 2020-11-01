@@ -3,8 +3,8 @@ import { Route, RouteComponentProps, withRouter } from 'react-router-dom';
 import PublicLayout from '../../layout/PublicLayout';
 
 interface Props extends RouteComponentProps {
-  path: string;
-  exact: boolean;
+  path?: string;
+  exact?: boolean;
   component: React.ComponentType<any>;
 }
 
