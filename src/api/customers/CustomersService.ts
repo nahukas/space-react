@@ -17,11 +17,11 @@ class CustomersService {
     return response;
   }
 
-  public static async updateCustomer(id: number): Promise<Customer> {
-    const response = await FetchService.put<Customer>({
-      url: `${API.CUSTOMERS}/${id}`,
+  public static async updateCustomer(entity: Customer) {
+    await FetchService.put<Customer>({
+      url: `${API.CUSTOMERS}/${entity.id}`,
+      body: entity,
     });
-    return response;
   }
 }
 

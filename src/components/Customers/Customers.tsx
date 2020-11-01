@@ -3,7 +3,8 @@ import { message, Spin, Table } from 'antd';
 import moment from 'moment';
 import CustomersService from '../../api/customers/CustomersService';
 import { Customer } from '../../api/customers/models';
-import ModalCustomer from '../../api/customers/CustomerModal';
+import ModalCustomer from './CustomerModal';
+import { germanFormat } from '../../helpers/number.helpers';
 
 const Customers: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -29,11 +30,14 @@ const Customers: React.FC = () => {
 
   const handleRowClick = (customerId: number) => {
     setCustomerToEdit(customerId);
-    handleModalVisible(true);
+    handleModalVisible(true, false);
   };
 
-  const handleModalVisible = (modalVisible: boolean) => {
+  const handleModalVisible = (modalVisible: boolean, shouldUpdate: boolean) => {
     setIsModalVisible(modalVisible);
+    if (shouldUpdate) {
+      fetchCustomers();
+    }
   };
 
   const columns = [
@@ -49,27 +53,15 @@ const Customers: React.FC = () => {
     },
     {
       title: 'Total Budget',
-      render: (cell: Customer) =>
-        new Intl.NumberFormat('de-DE', {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        }).format(cell.budget),
+      render: (cell: Customer) => germanFormat(cell.budget),
     },
     {
       title: 'Budget Spent',
-      render: (cell: Customer) =>
-        new Intl.NumberFormat('de-DE', {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        }).format(cell.budget_spent),
+      render: (cell: Customer) => germanFormat(cell.budget_spent),
     },
     {
       title: 'Budget Left',
-      render: (cell: Customer) =>
-        new Intl.NumberFormat('de-DE', {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        }).format(cell.budget - cell.budget_spent),
+      render: (cell: Customer) => germanFormat(cell.budget - cell.budget_spent),
     },
   ];
 
@@ -89,6 +81,7 @@ const Customers: React.FC = () => {
         dataSource={customers}
         columns={columns}
         key="id"
+        rowKey="id"
         pagination={false}
         onRow={(record: Customer) => ({
           onClick: () => {
