@@ -1,0 +1,3 @@
+export enum URLs {
+  ROOT = '/',
+}
