@@ -98,7 +98,7 @@ input {
 
   h1 {
     color: $primary-color;
-    font-size: 40px;
+    font-size: clamp(2.2rem, 3.5vw, 3rem);
     font-family: Grad-Bold;
   }
 

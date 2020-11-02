@@ -6,12 +6,10 @@ const AboutPage: React.FC = () => {
       <div
         style={{
           display: 'flex',
-          justifyContent: 'center',
           flexDirection: 'column',
           backgroundColor: '#1c20294d',
           height: '100%',
           overflow: 'scroll',
-          paddingTop: '500px',
           fontFamily: 'serif',
         }}
       >

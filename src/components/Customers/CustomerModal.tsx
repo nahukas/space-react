@@ -6,6 +6,7 @@ import { FormComponentProps } from 'antd/lib/form';
 import { germanFormat } from '../../helpers/number.helpers';
 import { validateAntForm } from '../../helpers/ant-form';
 import { RegEx } from '../../config/constants';
+import { formItemLayout } from '../../layout/constants';
 
 interface FormValues {
   budget: string;
@@ -16,17 +17,6 @@ interface Props extends FormComponentProps<FormValues> {
   isModalVisible: boolean;
   handleModalVisible: (modalVisible: boolean, shouldUpdate: boolean) => void;
 }
-
-const formItemLayout = {
-  labelCol: {
-    xs: { span: 24 },
-    sm: { span: 8 },
-  },
-  wrapperCol: {
-    xs: { span: 24 },
-    sm: { span: 16 },
-  },
-};
 
 const ModalCustomer: React.FC<Props> = ({
   form,
@@ -121,9 +111,9 @@ const ModalCustomer: React.FC<Props> = ({
               })(<Input />)}
             </Form.Item>
 
-            <Form.Item label="Budget Spent" labelAlign="left">
+            {/* <Form.Item label="Budget Spent" labelAlign="left">
               <span>{germanFormat(customer.budget_spent)}</span>
-            </Form.Item>
+            </Form.Item> */}
 
             <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
               <Button

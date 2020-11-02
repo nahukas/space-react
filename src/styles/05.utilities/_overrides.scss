@@ -39,6 +39,13 @@
   cursor: pointer;
 }
 
+.ant-input {
+  border: none;
+  border-radius: 0;
+  border-bottom: 1px solid #b7b7b7;
+  padding-left: 2px;
+}
+
 .table-row-light {
   background: #fff;
 }

@@ -8,7 +8,7 @@ const PublicLayout: React.FC = ({ children }) => (
     <Content>
       <div className="container">{children}</div>
     </Content>
-    <Footer />
+    {/* <Footer /> */}
   </AntLayout>
 );
 
