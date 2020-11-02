@@ -83,3 +83,37 @@ input {
     font-family: Grad-Bold;
   }
 }
+
+.about-us {
+  display: flex;
+  background-color: #1f242e;
+  background-image: url('../../assets/images/astronaut.png');
+  background-repeat: no-repeat;
+  background-size: 480px 480px;
+  background-position: right 10px bottom 10px;
+  justify-content: flex-start;
+  flex-direction: column;
+  height: 100%;
+  padding: 30px 70px;
+
+  h1 {
+    color: $primary-color;
+    font-size: 40px;
+    font-family: Grad-Bold;
+  }
+
+  h2 {
+    color: #fff;
+    font-size: 24px;
+    font-family: Grad-Bold;
+    margin-bottom: 10px;
+    margin-top: 10px;
+  }
+
+  p {
+    color: #fff;
+    font-size: 1.8rem;
+    line-height: 3rem;
+    text-align: justify;
+  }
+}

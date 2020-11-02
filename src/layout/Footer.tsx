@@ -9,15 +9,19 @@ const Footer: React.FC = () => {
       <div className="container footer">
         <Row align="middle">
           <Col xs={24} sm={4}>
-            {/* <Link to={URLs.ABOUT} target="_blank">
-              Copyright Nahukas
-            </Link> */}
+            <Link to={URLs.ROOT}>Home</Link>
+          </Col>
+          <Col xs={24} sm={16}>
+            <Link to={URLs.ABOUT}>About us</Link>
+          </Col>
+          <Col
+            xs={24}
+            sm={4}
+            style={{ display: 'flex', justifyContent: 'flex-end' }}
+          >
             <a href={URLs.LINKEDIN} target="_blank" rel="noreferrer">
               Copyright Nahukas
             </a>
-          </Col>
-          <Col xs={24} sm={2}>
-            <Link to={URLs.ABOUT}>About us</Link>
           </Col>
         </Row>
       </div>
