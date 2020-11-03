@@ -11,7 +11,7 @@ const Routes: React.FC = () => {
     <BrowserRouter>
       <Switch>
         <PublicRoute exact path={URLs.ROOT} component={WelcomePage} />
-        {/* <PublicRoute exact path={URLs.ABOUT} component={AboutPage} /> */}
+        <PublicRoute exact path={URLs.ABOUT} component={AboutPage} />
         <PublicRoute component={NotFoundPage} />
       </Switch>
     </BrowserRouter>

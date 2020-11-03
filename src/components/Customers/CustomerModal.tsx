@@ -26,8 +26,9 @@ const ModalCustomer: React.FC<Props> = ({
 }) => {
   const { getFieldDecorator } = form;
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [customer, setCustomer] = useState<Customer | undefined>(undefined);
+  const [submit, setSubmit] = useState<boolean>(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     const fetchCustomers = async () => {
@@ -35,7 +36,6 @@ const ModalCustomer: React.FC<Props> = ({
         setIsLoading(true);
         try {
           const response = await CustomersService.getOne(id);
-          console.log(response);
           setCustomer(response);
         } catch (error) {
           message.error(error.message);
@@ -48,8 +48,33 @@ const ModalCustomer: React.FC<Props> = ({
     fetchCustomers();
   }, [id]);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleExtraValidations = async (): Promise<boolean> => {
+    const { budget } = await validateAntForm(form);
     if (customer) {
+      try {
+        const budgetNumber = Number(budget.replace(',', '.'));
+        if (budgetNumber < customer.budget_spent) {
+          setSubmit(false);
+          form.setFields({
+            budget: {
+              value: form.getFieldValue('budget'),
+              errors: [new Error('Budget must be greater than budget spent')],
+            },
+          });
+        } else {
+          setSubmit(true);
+          return true;
+        }
+      } catch (error) {
+        setSubmit(false);
+        return false;
+      }
+    }
+    return false;
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    if (customer && handleExtraValidations) {
       try {
         e.preventDefault();
         setIsSubmitting(true);
@@ -63,14 +88,11 @@ const ModalCustomer: React.FC<Props> = ({
           date_of_first_purchase: customer.date_of_first_purchase,
         };
 
-        console.log(entity);
-
         await CustomersService.updateCustomer(entity);
         message.success('Customer updated');
         handleModalVisible(false, true);
       } catch (error) {
         message.error('Error');
-        handleModalVisible(false, false);
       } finally {
         setIsSubmitting(false);
       }
@@ -86,47 +108,49 @@ const ModalCustomer: React.FC<Props> = ({
     >
       {isLoading && <Spin />}
       {customer !== undefined && (
-        <>
-          <Form
-            onSubmit={handleSubmit}
-            // layout="vertical"
-            colon={false}
-            hideRequiredMark={true}
-            {...formItemLayout}
-          >
-            <Form.Item label="Budget" labelAlign="left">
-              {getFieldDecorator('budget', {
-                initialValue: germanFormat(customer?.budget).replace('.', ''),
-                rules: [
-                  {
-                    required: true,
-                    message: 'Field Required',
-                  },
-                  {
-                    pattern: RegEx.GERMAN_NUMBER_FORMAT,
-                    message:
-                      'Please enter only numbers and use a comma for decimals',
-                  },
-                ],
-              })(<Input />)}
-            </Form.Item>
+        <Form
+          onSubmit={handleSubmit}
+          colon={false}
+          hideRequiredMark={true}
+          {...formItemLayout}
+        >
+          <Form.Item label="Budget" labelAlign="left">
+            {getFieldDecorator('budget', {
+              initialValue: germanFormat(customer?.budget).replace('.', ''),
+              rules: [
+                {
+                  required: true,
+                  message: 'Field Required',
+                },
+                {
+                  pattern: RegEx.GERMAN_NUMBER_FORMAT,
+                  message:
+                    'Please enter only numbers and use a comma for decimals',
+                },
+              ],
+            })(
+              <Input
+                onBlur={() => handleExtraValidations()}
+                onChange={() => handleExtraValidations()}
+              />
+            )}
+          </Form.Item>
 
-            {/* <Form.Item label="Budget Spent" labelAlign="left">
-              <span>{germanFormat(customer.budget_spent)}</span>
-            </Form.Item> */}
+          <Form.Item label="Budget Spent" labelAlign="left">
+            <span>{germanFormat(customer.budget_spent)}</span>
+          </Form.Item>
 
-            <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-              <Button
-                type="primary"
-                loading={isSubmitting}
-                disabled={isSubmitting}
-                htmlType="submit"
-              >
-                Modify
-              </Button>
-            </div>
-          </Form>
-        </>
+          <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+            <Button
+              type="primary"
+              loading={isSubmitting}
+              disabled={isSubmitting || !submit}
+              htmlType="submit"
+            >
+              Modify
+            </Button>
+          </div>
+        </Form>
       )}
     </Modal>
   );
