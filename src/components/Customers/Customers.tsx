@@ -1,10 +1,11 @@
 import React, { useEffect, useCallback, useState } from 'react';
-import { message, Spin, Table } from 'antd';
+import { message, Table } from 'antd';
 import moment from 'moment';
 import CustomersService from '../../api/customers/CustomersService';
 import { Customer } from '../../api/customers/models';
 import ModalCustomer from './CustomerModal';
 import { germanFormat } from '../../helpers/number.helpers';
+import Spinner from '../Spinner/Spinner';
 
 const Customers: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -66,7 +67,18 @@ const Customers: React.FC = () => {
   ];
 
   if (isLoading) {
-    return <Spin />;
+    return (
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          minHeight: '50vh',
+        }}
+      >
+        <Spinner />
+      </div>
+    );
   }
 
   return (

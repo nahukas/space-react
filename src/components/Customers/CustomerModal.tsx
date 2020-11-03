@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { message, Modal, Spin, Form, Input, Button } from 'antd';
+import { message, Modal, Form, Input, Button } from 'antd';
 import { Customer } from '../../api/customers/models';
 import CustomersService from '../../api/customers/CustomersService';
 import { FormComponentProps } from 'antd/lib/form';
@@ -7,6 +7,7 @@ import { germanFormat } from '../../helpers/number.helpers';
 import { validateAntForm } from '../../helpers/ant-form';
 import { RegEx } from '../../config/constants';
 import { formItemLayout } from '../../layout/constants';
+import Spinner from '../Spinner/Spinner';
 
 interface FormValues {
   budget: string;
@@ -106,7 +107,18 @@ const ModalCustomer: React.FC<Props> = ({
       onCancel={() => handleModalVisible(false, false)}
       footer={null}
     >
-      {isLoading && <Spin />}
+      {isLoading && (
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            minHeight: '100px',
+          }}
+        >
+          <Spinner />
+        </div>
+      )}
       {customer !== undefined && (
         <Form
           onSubmit={handleSubmit}
