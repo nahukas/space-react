@@ -103,7 +103,7 @@ const ModalCustomer: React.FC<Props> = ({
 
   return (
     <Modal
-      title={customer ? customer.name : 'Loading...'}
+      title={customer && !isLoading ? customer.name : 'Loading...'}
       visible={isModalVisible}
       onCancel={() => handleModalVisible(false, false)}
       footer={null}
