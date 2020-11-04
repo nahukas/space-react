@@ -28,7 +28,6 @@ const ModalCustomer: React.FC<Props> = ({
   const { getFieldDecorator } = form;
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [customer, setCustomer] = useState<Customer | undefined>(undefined);
-  const [submit, setSubmit] = useState<boolean>(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
@@ -49,35 +48,37 @@ const ModalCustomer: React.FC<Props> = ({
     fetchCustomers();
   }, [id]);
 
+  useEffect(() => {
+    if (!isModalVisible) {
+      form.resetFields();
+    }
+  }, [isModalVisible, form]);
+
   const handleExtraValidations = async (): Promise<boolean> => {
     const { budget } = await validateAntForm(form);
     if (customer) {
-      try {
-        const budgetNumber = Number(budget.replace(',', '.'));
-        if (budgetNumber < customer.budget_spent) {
-          setSubmit(false);
-          form.setFields({
-            budget: {
-              value: form.getFieldValue('budget'),
-              errors: [new Error('Budget must be greater than budget spent')],
-            },
-          });
-        } else {
-          setSubmit(true);
-          return true;
-        }
-      } catch (error) {
-        setSubmit(false);
+      const budgetNumber = Number(budget.replace(',', '.'));
+      if (budgetNumber < customer.budget_spent) {
+        form.setFields({
+          budget: {
+            value: form.getFieldValue('budget'),
+            errors: [new Error('Budget must be greater than budget spent')],
+          },
+        });
         return false;
+      } else {
+        return true;
       }
     }
     return false;
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    if (customer && handleExtraValidations) {
+    e.preventDefault();
+    const extraValidations = await handleExtraValidations();
+
+    if (customer && extraValidations === true) {
       try {
-        e.preventDefault();
         setIsSubmitting(true);
         const { budget } = await validateAntForm(form);
 
@@ -119,6 +120,7 @@ const ModalCustomer: React.FC<Props> = ({
           <Spinner />
         </div>
       )}
+
       {customer !== undefined && (
         <Form
           onSubmit={handleSubmit}
@@ -140,12 +142,7 @@ const ModalCustomer: React.FC<Props> = ({
                     'Please enter only numbers and use a comma for decimals',
                 },
               ],
-            })(
-              <Input
-                onBlur={() => handleExtraValidations()}
-                onChange={() => handleExtraValidations()}
-              />
-            )}
+            })(<Input />)}
           </Form.Item>
 
           <Form.Item label="Budget Spent" labelAlign="left">
@@ -156,7 +153,7 @@ const ModalCustomer: React.FC<Props> = ({
             <Button
               type="primary"
               loading={isSubmitting}
-              disabled={isSubmitting || !submit}
+              disabled={isSubmitting}
               htmlType="submit"
             >
               Modify
