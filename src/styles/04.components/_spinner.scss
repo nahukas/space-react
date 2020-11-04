@@ -7,10 +7,10 @@
   -moz-animation: rotation 1.5s infinite linear;
   -o-animation: rotation 1.5s infinite linear;
   animation: rotation 1.5s infinite linear;
-  border-left: 4px solid #ff4338;
-  border-right: 4px solid #ff4338;
-  border-bottom: 4px solid #ff4338;
-  border-top: 4px solid #ff8769;
+  border-left: 4px solid $primary-color;
+  border-right: 4px solid $primary-color;
+  border-bottom: 4px solid $primary-color;
+  border-top: 4px solid $primary-color-light;
   border-radius: 100%;
 }
 

@@ -121,7 +121,7 @@ const ModalCustomer: React.FC<Props> = ({
         </div>
       )}
 
-      {customer !== undefined && (
+      {customer !== undefined && !isLoading && (
         <Form
           onSubmit={handleSubmit}
           colon={false}
