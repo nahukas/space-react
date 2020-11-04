@@ -9,8 +9,10 @@ const AboutPage: React.FC = () => {
           flexDirection: 'column',
           backgroundColor: '#1c20294d',
           height: '100%',
-          overflow: 'scroll',
+          overflowY: 'scroll',
+          overflowX: 'hidden',
           fontFamily: 'serif',
+          padding: '0 40px',
         }}
       >
         <h1 style={{ marginBottom: '30px', textAlign: 'center' }}>

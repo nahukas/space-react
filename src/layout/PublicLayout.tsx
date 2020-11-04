@@ -4,7 +4,7 @@ import Content from './Content';
 import Footer from './Footer';
 
 const PublicLayout: React.FC = ({ children }) => (
-  <AntLayout style={{ minHeight: '100vh' }}>
+  <AntLayout>
     <Content>
       <div className="container">{children}</div>
     </Content>

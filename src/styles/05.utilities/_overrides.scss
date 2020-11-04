@@ -1,6 +1,12 @@
 .ant-layout-footer {
   background: $secondary-color;
 
+  position: fixed;
+  height: 60px;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+
   span,
   a {
     color: #fff;
@@ -31,7 +37,7 @@
 }
 
 .ant-layout-content {
-  height: calc(100vh - 70px);
+  height: calc(100vh - 60px);
 }
 
 .ant-table-thead > tr,
