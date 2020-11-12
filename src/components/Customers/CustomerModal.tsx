@@ -130,7 +130,7 @@ const ModalCustomer: React.FC<Props> = ({
         >
           <Form.Item label="Budget" labelAlign="left">
             {getFieldDecorator('budget', {
-              initialValue: germanFormat(customer?.budget).replace('.', ''),
+              initialValue: germanFormat(customer?.budget).replaceAll('.', ''),
               rules: [
                 {
                   required: true,
